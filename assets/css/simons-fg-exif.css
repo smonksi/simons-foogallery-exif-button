@@ -1,0 +1,181 @@
+#fg-exif-window {
+
+
+    position:fixed;
+
+
+    top:120px;
+
+
+    left:120px;
+
+
+
+    width:500px;
+
+
+    height:550px;
+
+
+
+    background:#333;
+
+
+    border:1px solid #888;
+
+
+
+    z-index:999999;
+
+
+
+    resize:both;
+
+
+    overflow:hidden;
+
+
+
+    box-shadow:
+
+        0 4px 15px rgba(0,0,0,.35);
+
+
+}
+
+
+
+
+.fg-exif-header {
+
+
+    height:40px;
+
+
+    line-height:40px;
+
+
+
+    padding:0 10px;
+
+
+
+    background:#333;
+
+
+    color:#fff;
+
+
+
+    cursor:move;
+
+
+    user-select:none;
+
+
+}
+
+
+
+
+
+.fg-exif-close {
+
+
+    float:right;
+
+
+
+    margin-top:8px;
+
+
+
+    cursor:pointer;
+
+
+
+    background:none;
+
+
+    border:0;
+
+
+
+    color:#fff;
+
+
+    font-size:18px;
+
+
+}
+
+
+
+
+
+.fg-exif-content {
+
+
+    height:
+
+        calc(100% - 40px);
+
+
+
+    overflow:auto;
+
+
+
+    padding:10px;
+
+
+
+    font-size:14px;
+
+
+
+}
+
+
+
+
+
+.fg-exif-content table {
+
+
+    width:100%;
+
+
+    border-collapse:collapse;
+
+
+}
+
+
+
+
+
+.fg-exif-content td {
+
+
+    padding:5px;
+
+
+    border-bottom:
+
+        1px solid #666;
+
+
+}
+
+
+
+
+
+.exif-table-head {
+
+
+    color:#9e6020;
+
+
+}
