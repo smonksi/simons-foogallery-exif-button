@@ -62,7 +62,6 @@ class Simons_FG_Exif_Button {
 
 
 
-
     /**
 	 * Build EXIF HTML
 	 */
@@ -100,14 +99,21 @@ class Simons_FG_Exif_Button {
 
 
 
-        $exif_groups =
-            $metadata['image_meta']['extended_meta_data'];
+        $exif_groups = $metadata['image_meta']['extended_meta_data'];
 
+        if ( array_key_exists('extended_meta_data',  $exif_groups ) ) {
+            
+            unset( $exif_groups['extended_meta_data'] );
+        }
+
+        if ( !array_key_exists('EXIF',  $exif_groups ) ) {
+
+            $exif_groups = [];
+            $exif_groups['EXIF'] = $metadata['image_meta']['extended_meta_data'];
+        }
 
 
         $rows = '';
-
-
 
         foreach ($exif_groups as $group_key => $group_data) {
 
