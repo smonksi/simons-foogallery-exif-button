@@ -127,6 +127,8 @@ jQuery(function ($) {
 
         makeDraggable(win);
 
+        console.log($(".fg-exif-content").html());
+
 
     }
 

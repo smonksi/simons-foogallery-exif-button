@@ -281,9 +281,7 @@ class Simons_FG_Exif_Button {
                         </td>
 
 
-                        <td>' .
-                            esc_html($value)
-                        . '</td>
+                        <td>' . $value . '</td>
 
 
                     </tr>';
