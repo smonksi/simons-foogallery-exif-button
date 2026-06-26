@@ -1,5 +1,33 @@
 jQuery(function ($) {
 
+    /*
+     * Close when FooGallery lightbox closes
+     */
+    $(document).on(
+        "click",
+        ".fg-panel-button-close",
+        function(){
+
+            closeExifWindow();
+
+        }
+    );
+
+        /*
+     * Close when user advances image
+     *
+     * FooGallery navigation buttons
+     */
+    $(document).on(
+        "click",
+        ".fg-panel-button-prev, .fg-panel-button-next",
+        function(){
+
+            closeExifWindow();
+
+        }
+    );
+
 
     $(document).on(
         "click",
@@ -34,7 +62,12 @@ jQuery(function ($) {
         }
     );
 
+    function closeExifWindow()
+    {
 
+        $("#fg-exif-window").remove();
+
+    }
 
 
 
