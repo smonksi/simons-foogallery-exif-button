@@ -32,8 +32,104 @@ class Simons_FG_Exif_Button {
 			3
 		);
 
+        add_filter(
+            'simons_fg_exif_data',
+            [ $this, 'filter_exif_data' ],
+            5,
+            1
+        );
+
 
 	}
+
+    /**
+	 * Initial Filtering of metadata
+	 */
+    public function filter_exif_data($exif_groups) {
+
+
+        if (
+            empty($exif_groups['SRC'])
+            || !is_array($exif_groups['SRC'])
+        ) {
+            return $exif_groups;
+        }
+
+        foreach ($exif_groups['SRC'] as $key => &$value) {
+
+            if (
+                !in_array(
+                    $key,
+                    [
+                        'affinity_path',
+                        'export_path'
+                    ],
+                    true
+                )
+                || empty($value)
+            ) {
+                continue;
+            }
+
+            $value =
+                $this->convert_path_to_os_editor_link(
+                    $value
+                );
+
+        }
+
+        return $exif_groups;
+
+    }
+
+    private function convert_path_to_os_editor_link($path) {
+
+
+        if (empty($path)) {
+            return '';
+        }
+
+        /*
+        * Normalise slashes only (no structural changes)
+        */
+        $normalized = str_replace('\\', '/', $path);
+
+
+        /*
+        * Fix Windows drive format for file:///
+        */
+        if (preg_match('#^[A-Za-z]:/#', $normalized)) {
+            $normalized = '/' . $normalized;
+        }
+
+
+        /*
+        * Encode only unsafe URL characters
+        * (DO NOT touch ":" or "/")
+        */
+        $encoded = str_replace(
+            [' ', '#'],
+            ['%20', '%23'],
+            $normalized
+        );
+
+
+        /*
+        * Build file URL
+        */
+        $file_url = 'file://' . $encoded;
+
+
+        /*
+        * Display stays human-readable (original form)
+        */
+        return sprintf(
+            '<a href="%s" class="fg-exif-file-link" target="_blank" rel="noopener">%s</a>',
+            esc_attr($file_url),
+            esc_html($path)
+        );
+
+    }
 
 
 
@@ -97,9 +193,9 @@ class Simons_FG_Exif_Button {
 
         }
 
+        $exif_groups = apply_filters( 'simons_fg_exif_data', $metadata['image_meta']['extended_meta_data'] );
 
-
-        $exif_groups = $metadata['image_meta']['extended_meta_data'];
+        // $exif_groups = $metadata['image_meta']['extended_meta_data'];
 
         if ( array_key_exists('extended_meta_data',  $exif_groups ) ) {
             
