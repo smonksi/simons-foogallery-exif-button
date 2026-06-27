@@ -90,10 +90,10 @@ class Simons_FG_Exif_Button {
         }
 
         
-        // $file_path = 'F:/Media/Image Library/2026/06/21/iCloud Photos/IMG_7547.JPG';
-        $encoded = urlencode($file_path);
+        // encode file path
+        $encoded = rawurlencode($file_path);
         $uri = 'affinityedit://open?file=' . $encoded;
-        // echo '<a href="' . esc_attr($uri) . '" class="button">Open in Affinity</a>';
+  
 
         /*
         * Display stays human-readable (original form)
@@ -103,8 +103,6 @@ class Simons_FG_Exif_Button {
             esc_attr($uri),
             esc_html($file_path)
         );
-
-
 
         // /*
         // * Normalise slashes only (no structural changes)
