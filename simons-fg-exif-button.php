@@ -82,52 +82,69 @@ class Simons_FG_Exif_Button {
 
     }
 
-    private function convert_path_to_os_editor_link($path) {
+    private function convert_path_to_os_editor_link($file_path) {
 
 
-        if (empty($path)) {
+        if (empty($file_path)) {
             return '';
         }
 
-        /*
-        * Normalise slashes only (no structural changes)
-        */
-        $normalized = str_replace('\\', '/', $path);
-
-
-        /*
-        * Fix Windows drive format for file:///
-        */
-        if (preg_match('#^[A-Za-z]:/#', $normalized)) {
-            $normalized = '/' . $normalized;
-        }
-
-
-        /*
-        * Encode only unsafe URL characters
-        * (DO NOT touch ":" or "/")
-        */
-        $encoded = str_replace(
-            [' ', '#'],
-            ['%20', '%23'],
-            $normalized
-        );
-
-
-        /*
-        * Build file URL
-        */
-        $file_url = 'file://' . $encoded;
-
+        
+        // $file_path = 'F:/Media/Image Library/2026/06/21/iCloud Photos/IMG_7547.JPG';
+        $encoded = urlencode($file_path);
+        $uri = 'affinityedit://open?file=' . $encoded;
+        // echo '<a href="' . esc_attr($uri) . '" class="button">Open in Affinity</a>';
 
         /*
         * Display stays human-readable (original form)
         */
         return sprintf(
-            '<a href="%s" class="fg-exif-file-link" target="_blank" rel="noopener">%s</a>',
-            esc_attr($file_url),
-            esc_html($path)
+            '<a href="%s" class="fg-exif-file-link" target="_blank" rel="noopener">Open in Affinity: %s</a>',
+            esc_attr($uri),
+            esc_html($file_path)
         );
+
+
+
+        // /*
+        // * Normalise slashes only (no structural changes)
+        // */
+        // $normalized = str_replace('\\', '/', $path);
+
+
+        // /*
+        // * Fix Windows drive format for file:///
+        // */
+        // if (preg_match('#^[A-Za-z]:/#', $normalized)) {
+        //     $normalized = '/' . $normalized;
+        // }
+
+
+        // /*
+        // * Encode only unsafe URL characters
+        // * (DO NOT touch ":" or "/")
+        // */
+        // $encoded = str_replace(
+        //     [' ', '#'],
+        //     ['%20', '%23'],
+        //     $normalized
+        // );
+
+
+        // /*
+        // * Build file URL
+        // */
+        // $file_url = 'file://' . $encoded;
+
+
+        // /*
+        // * Display stays human-readable (original form)
+        // */
+        // return sprintf(
+        //     '<a href="%s" class="fg-exif-file-link" target="_blank" rel="noopener">%s</a>',
+        //     esc_attr($file_url),
+        //     esc_html($path)
+        // );
 
     }
 
