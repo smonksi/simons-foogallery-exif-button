@@ -48,12 +48,20 @@ class Simons_FG_Exif_Button {
     public function filter_exif_data($exif_groups) {
 
 
+
+        /** 
+         * Convert 'SRC' filepath fields 
+         * (created in bash file) to 'openable' file paths
+         */
+
         if (
             empty($exif_groups['SRC'])
             || !is_array($exif_groups['SRC'])
         ) {
             return $exif_groups;
         }
+
+        
 
         foreach ($exif_groups['SRC'] as $key => &$value) {
 
@@ -76,6 +84,24 @@ class Simons_FG_Exif_Button {
                     $value
                 );
 
+        }
+
+
+        $file_path = $exif_groups['SRC']['file_path'];
+
+
+        if ( !empty( $file_path )) {
+
+            $ifdo_filename =$exif_groups["IFD0"]['Make'];
+
+            if (!empty($ifdo_filename) ) {
+
+                $affinity_edit_path =   $file_path . $ifdo_filename . '.afphoto';
+                
+                $exif_groups['SRC']['affinity_edit_path'] = $this->convert_path_to_os_editor_link( $affinity_edit_path );
+
+                // $exif_groups["IFD0"]['Make'] = $exif_groups["EXIF"]["UndefinedTag:0xA433"];
+            }
         }
 
         return $exif_groups;
