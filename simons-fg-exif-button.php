@@ -69,8 +69,8 @@ class Simons_FG_Exif_Button {
                 !in_array(
                     $key,
                     [
-                        'affinity_path',
-                        'export_path'
+                        'source_jpg',
+                        'converted_webp'
                     ],
                     true
                 )
@@ -87,16 +87,17 @@ class Simons_FG_Exif_Button {
         }
 
 
-        $file_path = $exif_groups['SRC']['file_path'];
+        $edit_path = $exif_groups['SRC']['edit_path'];
 
 
-        if ( !empty( $file_path )) {
+        if ( !empty( $edit_path )) {
 
             $ifdo_filename =$exif_groups["IFD0"]['Make'];
+            $ifdo_fileExtension =$exif_groups["EXIF"]['Lens'];
 
             if (!empty($ifdo_filename) ) {
 
-                $affinity_edit_path =   $file_path . $ifdo_filename . '.afphoto';
+                $affinity_edit_path =   $edit_path . $ifdo_filename . '.afphoto';
                 
                 $exif_groups['SRC']['affinity_edit_path'] = $this->convert_path_to_os_editor_link( $affinity_edit_path );
 
