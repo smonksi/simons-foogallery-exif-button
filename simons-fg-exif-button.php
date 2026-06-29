@@ -63,28 +63,28 @@ class Simons_FG_Exif_Button {
 
         
 
-        foreach ($exif_groups['SRC'] as $key => &$value) {
+        // foreach ($exif_groups['SRC'] as $key => &$value) {
 
-            if (
-                !in_array(
-                    $key,
-                    [
-                        'source_jpg',
-                        'converted_webp'
-                    ],
-                    true
-                )
-                || empty($value)
-            ) {
-                continue;
-            }
+        //     if (
+        //         !in_array(
+        //             $key,
+        //             [
+        //                 'source_jpg',
+        //                 'converted_webp'
+        //             ],
+        //             true
+        //         )
+        //         || empty($value)
+        //     ) {
+        //         continue;
+        //     }
 
-            $value =
-                $this->convert_path_to_os_editor_link(
-                    $value
-                );
+        //     $value =
+        //         $this->convert_path_to_os_editor_link(
+        //             $value
+        //         );
 
-        }
+        // }
 
 
         $edit_path = $exif_groups['SRC']['edit_path'];
@@ -92,12 +92,18 @@ class Simons_FG_Exif_Button {
 
         if ( !empty( $edit_path )) {
 
-            $ifdo_filename =$exif_groups["IFD0"]['Make'];
-            $ifdo_fileExtension =$exif_groups["EXIF"]['Lens'];
+            $edit_file_data = explode("|", $exif_groups["IFD0"]['Copyright'] );
 
-            if (!empty($ifdo_filename) ) {
+            $edit_filename = trim($edit_file_data[0]);
+            $edit_extension = ( $edit_file_data[1]) ? trim($edit_file_data[1]) : 'afphoto' ;
+            $edit_extension = str_replace('.', '', $edit_extension);
 
-                $affinity_edit_path =   $edit_path . $ifdo_filename . '.afphoto';
+            // Does the filename include an extension? If not add one. Defaults to .afphoto
+            $edit_filename = strpos( $edit_filename, "." ) ? $edit_filename : $edit_filename . '.' .$edit_extension ;
+
+            if (!empty($edit_filename) ) {
+
+                $affinity_edit_path =   $edit_path . $edit_filename;
                 
                 $exif_groups['SRC']['affinity_edit_path'] = $this->convert_path_to_os_editor_link( $affinity_edit_path );
 
